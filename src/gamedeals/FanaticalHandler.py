@@ -7,10 +7,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 class FanaticalHandler:
-    def __init__(self):
-        options = webdriver.ChromeOptions()
-        options.add_argument('headless')
-        self.driver = webdriver.Chrome(chrome_options=options)
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
 
     def get_page(self, url: str):
         driver = self.driver
@@ -29,5 +27,8 @@ class FanaticalHandler:
 
 
 if __name__ == "__main__":
-    fanatical_handler = FanaticalHandler()
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    driver = webdriver.Chrome(chrome_options=options)
+    fanatical_handler = FanaticalHandler(driver)
     fanatical_handler.get_page('https://www.fanatical.com/en/game/kerbal-space-program')
