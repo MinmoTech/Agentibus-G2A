@@ -1,17 +1,18 @@
 =========
 GameDeals
 =========
-
-
-Add a short description here!
+Work in progress!
+=================
 
 
 Description
 ===========
 
-A longer description of your project goes here...
-
-
+This Application will
+- get current deals from r/GameDeals 
+- check if the game has at least 1000 ratings on steam
+- compare prices with G2A
+- message you on Telegram, when there is a certain profit margin by selling the game on G2A
 Note
 ====
 
