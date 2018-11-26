@@ -16,7 +16,7 @@ install:
 addons:
   sonarcloud:
     organization: "juligreen-github"
-    token:
-      secure: "oZA0mEVRdFoo4ZKIc6KEUbMX9VvTE7lIfjkfPIGE03+Gq8/re5i9fDghGwMW8CNER/ozfXIj8sN0qe+UvjreBbWCKiCbiDaq46MwgGoNFuI8bcBH5ORS9ljCwd6rGrNciKJ5UUeYJAEN0xoXpVPkh/ge8PbquUdqRm3h64sh9ahBeg1lPvk0FNrs5EBZdZtOwtdWiic8345gfG1j8KOq2GnXen0BzY/r28Bxt2UAnhl6mhg6k6wImIgaMQEan9i5+3ZVZ31g8jqTxbCtFIvf5Amb9d8b4eXcm+YNtjkyaLSnkOyIvKUey6btf/IgxOyhJANlsxYa3fOP/9WWJlSWD4PohbQx5qwO5fdxpfw0nTaBg9rrrfWh8/k0Il2fVnL6DPsu1ZEO4fiT2q8tULyFenYoVEha8CbQViuf+GH+s/YR7+GmdSYT0f9NwM5nKqMq1E2/2+IJfISDMEOrY3CfYLzQNxwyN68DCmF6rBHU6pfyrV7nM5LjWs/c4MPxu3pTa1fntyCI+oenz7qr/ynM2kA8nhtWXMtlEM8ofiU8i4+WeTyqJSG5dcma4G0npJBltUh/DED/7fi8pYgwdIDYIbXF2ED1w4aonUM4Bge9cHwjIrLbu83jsiBAhrnQLYo5AOzYCpnD91kZndP/3wfGFCeYqwGlwcaMFqAee1sS5iI="
+    token: $SONAR_TOKEN
+
 script:
   - sonar-scanner
