@@ -1,7 +1,4 @@
-from decimal import Decimal
-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
@@ -18,4 +15,4 @@ class SteamHandler:
         search_result_container = driver.find_element_by_id('search_result_container')
         search_result_container.find_element_by_tag_name('a').click()
         user_reviews_count = driver.find_element_by_xpath("//meta[@itemprop='reviewCount']").get_attribute('content')
-        return user_reviews_count
+        return int(user_reviews_count)

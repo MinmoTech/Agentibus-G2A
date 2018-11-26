@@ -13,5 +13,4 @@ for submission in reddit.subreddit('GameDeals').new(limit=50):
     else:
         if 'fanatical' in submission.url:
             fanatical_handler = FanaticalHandler
-            fanatical_handler.get_page(submission.url)
-
+            fanatical_handler.get_game_name(submission.url)
