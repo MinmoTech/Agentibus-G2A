@@ -1,8 +1,6 @@
 import re
 import praw
-from praw.models import Submission
-
-from src.gamedeals.FanaticalHandler import FanaticalHandler
+from praw.models import Submission, MoreComments
 
 
 class RedditParser:
@@ -23,8 +21,9 @@ class RedditParser:
         else:
             sale_urls.append(submission.url)
         for top_level_comment in submission.comments:
-            comment_site_urls = re.findall(regex, top_level_comment.body)
-            sale_urls.append(comment_site_urls)
+            if type(top_level_comment) is not MoreComments:
+                comment_site_urls = re.findall(regex, top_level_comment.body)
+                sale_urls.append(comment_site_urls)
         return sale_urls
 
 # TODO: test
