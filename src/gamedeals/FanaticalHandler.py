@@ -1,6 +1,6 @@
 from decimal import Decimal
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -14,7 +14,7 @@ class FanaticalHandler:
         fanatical_driver = self.driver
         fanatical_driver.get(self.fanatical_url)
         WebDriverWait(fanatical_driver, 800).until(
-            EC.visibility_of_element_located((By.TAG_NAME, 'h1'))
+            expected_conditions.visibility_of_element_located((By.TAG_NAME, 'h1'))
         )
         game_name = fanatical_driver.find_element_by_tag_name('h1').text
         return game_name
@@ -23,7 +23,7 @@ class FanaticalHandler:
         fanatical_driver = self.driver
         fanatical_driver.get(self.fanatical_url)
         WebDriverWait(fanatical_driver, 800).until(
-            EC.visibility_of_element_located((By.TAG_NAME, 'h4'))
+            expected_conditions.visibility_of_element_located((By.TAG_NAME, 'h4'))
         )
         sale_price = fanatical_driver.find_element_by_tag_name('h4').find_element_by_tag_name(
             'span').find_element_by_tag_name(
