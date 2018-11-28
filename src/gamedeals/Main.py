@@ -1,13 +1,11 @@
 from decimal import Decimal
 from selenium import webdriver
-from src.gamedeals import Utility
+from src.gamedeals import Utility, ini_parser
 from src.gamedeals.StoreHandlers.FanaticalHandler import FanaticalHandler
 from src.gamedeals.G2AHandler import G2AHandler
 from src.gamedeals.SteamHandler import SteamHandler
 
 if __name__ == "__main__":
-    profit_percentage = Decimal(0.20)
-
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
@@ -26,5 +24,5 @@ if __name__ == "__main__":
             print(after_commission_price)
             price_cut = Decimal(after_commission_price / g2a_price)
             print(price_cut)
-            if price_cut < profit_percentage:
+            if price_cut < ini_parser.get_net_profit_percentage():
                 print('this should send a telegram message!')
