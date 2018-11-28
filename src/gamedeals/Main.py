@@ -1,3 +1,5 @@
+import logging
+import pathlib
 from decimal import Decimal
 from selenium import webdriver
 from src.gamedeals import Utility, ini_parser
@@ -6,6 +8,15 @@ from src.gamedeals.G2AHandler import G2AHandler
 from src.gamedeals.SteamHandler import SteamHandler
 
 if __name__ == "__main__":
+    pathlib.Path('./logs').mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s  %(message)s",
+        handlers=[
+            logging.FileHandler("./logs/GameDeals.log"),
+            logging.StreamHandler()
+        ])
+
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
@@ -26,3 +37,6 @@ if __name__ == "__main__":
             print(price_cut)
             if price_cut < ini_parser.get_net_profit_percentage():
                 print('this should send a telegram message!')
+
+# TODO: Add game class which holds name, sale price + g2a price
+# TODO: better calculation for games in bundles with low steam reviews
