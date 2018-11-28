@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support.select import Select
 
 
-class G2AHandler:
+class HumbleStoreHandler:
     def __init__(self, driver: webdriver.Chrome, url: str):
         self.driver = driver
         self.url = url
