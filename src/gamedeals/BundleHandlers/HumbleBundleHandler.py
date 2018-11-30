@@ -34,21 +34,3 @@ class HumbleBundleHandler(BundleHandler):
                 prices.append(Decimal(matches[0].replace('€', '')))
         return max(prices)
 
-
-pathlib.Path('./logs').mkdir(parents=True, exist_ok=True)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s  %(message)s",
-    handlers=[
-        logging.FileHandler("./logs/GameDeals.log"),
-        logging.StreamHandler()
-    ])
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-driver = webdriver.Chrome(options=options)
-driver.set_window_size(1800, 1070)
-driver.implicitly_wait(1)
-handler = HumbleBundleHandler(driver, 'https://www.humblebundle.com/games/jumbo-bundle-12?hmb_source=navbar&hmb_medium=product_tile&hmb_campaign=tile_index_7')
-print(handler.get_total_sale_price())
-print(handler.get_total_g2a_price_after_deductions())
-print(handler.get_game_names())
