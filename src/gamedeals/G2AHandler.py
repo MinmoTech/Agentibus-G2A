@@ -73,7 +73,9 @@ class G2AHandler:
         driver.set_window_size(1800, 1070)
         driver.implicitly_wait(1)
         steam_handler = SteamHandler(driver)
-        return steam_handler.get_game_review_number(game_name)
+        review_number = steam_handler.get_game_review_number(game_name)
+        driver.quit()
+        return review_number
 
     @staticmethod
     def __get_price(offer):
