@@ -1,4 +1,5 @@
 import logging
+from contextlib import suppress
 from decimal import Decimal
 
 from selenium import webdriver
@@ -21,12 +22,10 @@ class G2AHandler:
         driver = self.driver
         steam_review = self.__get_steam_review_count(game_name)
         driver.get('https://www.g2a.com/')
-        try:
+        with suppress(NoSuchElementException):
             modal_options_buttons = driver.find_element_by_class_name('modal-options__buttons')
             cookie_confirm_button = modal_options_buttons.find_element_by_class_name('btn-primary')
             cookie_confirm_button.click()
-        except NoSuchElementException:
-            pass
         search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
         search_bar = search_bar_parent.find_element_by_tag_name('input')
         search_query = game_name + ' Steam Key Global'
@@ -34,36 +33,41 @@ class G2AHandler:
         search_bar.send_keys(Keys.RETURN)
         product_grids = driver.find_elements_by_class_name('products-grid__item')
         for product_grid in product_grids:
-            card_wrapper = product_grid.find_element_by_class_name('card-wrapper')
-            card_title_element = card_wrapper.find_element_by_class_name('Card__title')
-            card_title = card_title_element.find_element_by_tag_name('a').text
-            words_of_game_name = game_name.split()
-            self.logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
-            if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
-                self.logger.info("Success!")
-                card_wrapper.click()
-                try:
+            if self.__find_proper_card(product_grid, game_name, search_query):
+                with suppress(TimeoutException, NoSuchElementException):
                     WebDriverWait(driver, 10).until(
                         expected_conditions.visibility_of_element_located((By.CLASS_NAME, 'expander__button'))
                     )
                     offer_expander_button = driver.find_element_by_class_name('expander__button')
                     offer_expander_button.click()
-                except TimeoutException:
-                    pass
-                except NoSuchElementException:
-                    pass
                 offers = driver.find_elements_by_class_name('offer')
                 for offer in offers:
-                    rating_count_element = offer.find_element_by_class_name('rating-data')
-                    seller_info_percent = rating_count_element.find_element_by_class_name('seller-info__percent')
-                    separator = rating_count_element.find_element_by_class_name('separator')
-                    rating_count_dirty = rating_count_element.text
-                    rating_count = int(
-                        rating_count_dirty.replace(seller_info_percent.text, '').replace(separator.text, ''))
+                    rating_count = self.__get_g2a_rating_count(offer)
                     if steam_review < 500:
                         return self.__get_price(offer)
                     if rating_count > 1000:
                         return self.__get_price(offer)
+
+    def __find_proper_card(self, product_grid, game_name: str, search_query: str):
+        card_wrapper = product_grid.find_element_by_class_name('card-wrapper')
+        card_title_element = card_wrapper.find_element_by_class_name('Card__title')
+        card_title = card_title_element.find_element_by_tag_name('a').text
+        words_of_game_name = game_name.split()
+        self.logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
+        if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
+            self.logger.info("Success!")
+            card_wrapper.click()
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def __get_g2a_rating_count(offer):
+        rating_count_element = offer.find_element_by_class_name('rating-data')
+        seller_info_percent = rating_count_element.find_element_by_class_name('seller-info__percent')
+        separator = rating_count_element.find_element_by_class_name('separator')
+        rating_count_dirty = rating_count_element.text
+        return int(rating_count_dirty.replace(seller_info_percent.text, '').replace(separator.text, ''))
 
     @staticmethod
     def __get_steam_review_count(game_name):
