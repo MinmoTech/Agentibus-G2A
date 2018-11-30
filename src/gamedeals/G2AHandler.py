@@ -1,5 +1,4 @@
 import logging
-import string
 from decimal import Decimal
 
 from selenium import webdriver
@@ -10,6 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from src.gamedeals.SteamHandler import SteamHandler
+
 
 class G2AHandler:
     def __init__(self, driver: webdriver.Chrome):
@@ -18,6 +19,7 @@ class G2AHandler:
 
     def lookup_price_of(self, game_name: str):
         driver = self.driver
+        steam_review = self.__get_steam_review_count(game_name)
         driver.get('https://www.g2a.com/')
         try:
             modal_options_buttons = driver.find_element_by_class_name('modal-options__buttons')
@@ -27,13 +29,8 @@ class G2AHandler:
             pass
         search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
         search_bar = search_bar_parent.find_element_by_tag_name('input')
-        # from: https://stackoverflow.com/questions/45442485/cannot-focus-element-using-selenium
-        actions = ActionChains(driver)
-        actions.move_to_element(search_bar)
-        actions.click()
         search_query = game_name + ' Steam Key Global'
-        actions.send_keys(search_query)
-        actions.perform()
+        actions_send_keys(driver, search_bar, search_query)
         search_bar.send_keys(Keys.RETURN)
         product_grids = driver.find_elements_by_class_name('products-grid__item')
         for product_grid in product_grids:
@@ -63,8 +60,39 @@ class G2AHandler:
                     rating_count_dirty = rating_count_element.text
                     rating_count = int(
                         rating_count_dirty.replace(seller_info_percent.text, '').replace(separator.text, ''))
+                    if steam_review < 500:
+                        return self.__get_price(offer)
                     if rating_count > 1000:
-                        price_element = offer.find_element_by_class_name('price')
-                        currency = price_element.find_element_by_class_name('price__currency')
-                        price = price_element.text.replace(currency.text, '')
-                        return Decimal(price)
+                        return self.__get_price(offer)
+
+    @staticmethod
+    def __get_steam_review_count(game_name):
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        driver = webdriver.Chrome(options=options)
+        driver.set_window_size(1800, 1070)
+        driver.implicitly_wait(1)
+        steam_handler = SteamHandler(driver)
+        return steam_handler.get_game_review_number(game_name)
+
+    @staticmethod
+    def __get_price(offer):
+        price_element = offer.find_element_by_class_name('price')
+        currency = price_element.find_element_by_class_name('price__currency')
+        price = price_element.text.replace(currency.text, '')
+        return Decimal(price)
+
+
+def actions_click_element(driver: webdriver.Chrome, element):
+    actions = ActionChains(driver)
+    actions.move_to_element(element)
+    actions.click()
+
+
+def actions_send_keys(driver: webdriver.Chrome, element, text: str):
+    # from: https://stackoverflow.com/questions/45442485/cannot-focus-element-using-selenium
+    actions = ActionChains(driver)
+    actions.move_to_element(element)
+    actions.click()
+    actions.send_keys(text)
+    actions.perform()
