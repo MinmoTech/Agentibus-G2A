@@ -27,6 +27,12 @@ Features I might implement:
 
 You are free to reuse this code in other projects (so long as you distibute source code with binarys) as stated by the GPL License but I'd be very happy if you would message me at julius<dot>dehner<at>gmail<dot>com and tell me what you're using it for, just because I'm very curious :)
 
+== Dependencies
 
+This project uses:
+
+- https://github.com/SeleniumHQ/selenium[Selenium]
+- https://github.com/praw-dev/praw[PRAW]
+- https://github.com/python-telegram-bot/python-telegram-bot[python-telegram-bot]
 
 NOTE: This project has been set up using PyScaffold 3.0.3. For details and usage information on PyScaffold see http://pyscaffold.org/.
