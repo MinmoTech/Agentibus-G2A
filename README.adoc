@@ -1,15 +1,13 @@
-=========
-GameDeals
-=========
-Work in progress!
-=================
+= GameDeals
+Doc Writer <julius.dehner@gmail.com>
 
+== Work in progress!
 
-Description
-===========
+== Description
+
 Finished features:
 
-- get current deals from r/GameDeals 
+- get current deals from r/GameDeals
 - check if the game has at least 1000 ratings on steam
 - compare prices with G2A
 
@@ -25,12 +23,10 @@ Features I might implement:
 - writing a message on telegram to track game sales regardless of G2A prices
 
 
-Open Source
-===========
+== Open Source
+
 You are free to reuse this code in other projects (so long as you distibute source code with binarys) as stated by the GPL License but I'd be very happy if you would message me at julius<dot>dehner<at>gmail<dot>com and tell me what you're using it for, just because I'm very curious :)
 
-Note
-====
 
-This project has been set up using PyScaffold 3.0.3. For details and usage
-information on PyScaffold see http://pyscaffold.org/.
+
+NOTE: This project has been set up using PyScaffold 3.0.3. For details and usage information on PyScaffold see http://pyscaffold.org/.
