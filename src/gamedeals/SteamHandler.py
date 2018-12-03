@@ -1,3 +1,5 @@
+import logging
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -5,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 class SteamHandler:
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+        self.logger = logging.getLogger()
 
     def get_game_review_number(self, game_name):
         driver = self.driver
@@ -15,4 +18,5 @@ class SteamHandler:
         search_result_container = driver.find_element_by_id('search_result_container')
         search_result_container.find_element_by_tag_name('a').click()
         user_reviews_count = driver.find_element_by_xpath("//meta[@itemprop='reviewCount']").get_attribute('content')
+        self.logger.info(f'Steam reviews of {game_name}: {user_reviews_count}')
         return int(user_reviews_count)
