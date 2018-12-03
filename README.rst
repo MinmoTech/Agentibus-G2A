@@ -24,6 +24,11 @@ Features I might implement:
 - creating graphs of price develpment while on sale
 - writing a message on telegram to track game sales regardless of G2A prices
 
+
+Open Source
+===========
+You are free to reuse this code as stated by the MIT License but I'd be very happy if you would message me at julius<dot>dehner<at>gmail<dot>com and tell me what you're using it for, just because I'm very curious :)
+
 Note
 ====
 
