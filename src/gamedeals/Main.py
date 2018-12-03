@@ -16,6 +16,7 @@ if __name__ == "__main__":
             logging.FileHandler("./logs/GameDeals.log"),
             logging.StreamHandler()
         ])
+    logger = logging.getLogger()
 
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
@@ -31,12 +32,9 @@ if __name__ == "__main__":
         g2a_price = g2a_handler.lookup_price_of(game_name)
         if g2a_price is not None:
             after_commission_price = Utility.calculate_net_price(sale_price)
-            print(g2a_price)
-            print(after_commission_price)
+            logger.info(f'G2A price: {g2a_price}')
+            logger.info(f'Price after commission: {after_commission_price}')
             price_cut = Decimal(after_commission_price / g2a_price)
-            print(price_cut)
+            logger.info(f'Profit for this deals: {price_cut*100}%')
             if price_cut < ini_parser.get_net_profit_percentage():
                 print('this should send a telegram message!')
-
-# TODO: Add game class which holds name, sale price + g2a price
-# TODO: better calculation for games in bundles with low steam reviews
