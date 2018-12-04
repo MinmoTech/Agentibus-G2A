@@ -22,7 +22,7 @@ if __name__ == "__main__":
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(1800, 1070)
-    driver.implicitly_wait(1)
+    driver.implicitly_wait(2)
     fanatical_handler = FanaticalHandler(driver, 'https://www.fanatical.com/en/game/endless-space-2-collection')
     game_name = Utility.filter_special_characters(fanatical_handler.get_game_name())
     sale_price = fanatical_handler.get_sale_price()

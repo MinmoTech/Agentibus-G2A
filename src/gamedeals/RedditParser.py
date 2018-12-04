@@ -6,6 +6,8 @@ from praw.models import Submission, MoreComments
 class RedditParser:
     def __init__(self):
         self.fanatical_regex = '(?:https?://)?(?:www.)?fanatical.com/[\w|/|+|&|%|-]*'
+        self.humble_store_regex = '(?:https?://)?(?:www.)?humblebundle.com/store/[\w|/|+|&|%|-]*'
+        self.humble_bundle_regex = '(?:https?://)?(?:www.)?humblebundle.com/games/[\w|/|+|&|%|-]*'
 
     def get_sale_urls(self):
         reddit = praw.Reddit('game_deals_bot')
