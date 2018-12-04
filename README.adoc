@@ -19,7 +19,7 @@ TODOs:
 
 Features I might implement:
 
-- creating graphs of price develpment while on sale (probably using bokeh)
+- creating graphs of price develpment while on sale (probably using https://github.com/spotify/chartify[chartify] which is built on bokeh)
 - writing a message on telegram to track game sales regardless of G2A prices
 - telegram interactivity https://github.com/python-telegram-bot/python-telegram-bot/wiki/Types-of-Handlers[(docs)]
 
