@@ -2,6 +2,7 @@
 Doc Writer <julius.dehner@gmail.com>
 
 == Work in progress!
+The Project will probably change in that it scrapes deals directly from the deal sites instead of reddit, as this should give better performance (less regex) and better coverage.
 
 == Description
 
