@@ -1,5 +1,3 @@
-import logging
-import pathlib
 import re
 from decimal import Decimal
 from typing import List
@@ -33,4 +31,18 @@ class HumbleBundleHandler(BundleHandler):
             if len(matches) > 0:
                 prices.append(Decimal(matches[0].replace('€', '')))
         return max(prices)
+
+
+class HumbleCrawler:
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def crawl(self):
+        driver = self.driver
+        driver.get('https://www.humblebundle.com/')
+        bundle_dropdown = driver.find_element_by_xpath('//div[@data-dropdown-type="bundle-dropdown"]')
+        bundle_dropdown.click()
+        bundle_parent = bundle_dropdown.find_element_by_xpath('..')
+        bundles = bundle_parent.find_elements_by_class_name('image-link')
+        return [bundle.get_attribute for bundle in bundles]
 
