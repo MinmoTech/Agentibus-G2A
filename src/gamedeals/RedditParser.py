@@ -28,6 +28,7 @@ class RedditParser:
                 sale_urls.append(comment_site_urls)
         return sale_urls
 
+
 # TODO: test
 reddit_parser = RedditParser()
 reddit_parser.get_sale_urls()

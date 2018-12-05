@@ -44,5 +44,5 @@ class HumbleCrawler:
         bundle_dropdown.click()
         bundle_parent = bundle_dropdown.find_element_by_xpath('..')
         bundles = bundle_parent.find_elements_by_class_name('image-link')
-        return [bundle.get_attribute for bundle in bundles]
+        return [bundle.get_attribute('href') for bundle in bundles]
 
