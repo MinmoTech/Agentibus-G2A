@@ -14,6 +14,7 @@ Finished features:
 
 TODOs:
 
+- merge multiple classes into fewer modules (python best practice)
 - message you on Telegram, when there is a certain profit margin by selling the game on G2A
 - test cases
 - proper logging
