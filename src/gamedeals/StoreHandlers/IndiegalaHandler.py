@@ -15,10 +15,10 @@ class IndiegalaHandler:
         if 'crackerjack' not in driver.page_source:
             return driver.find_element_by_tag_name('h1').text
         else:
-            return self.__get_game_name_crackerjack(driver)
+            return self._get_game_name_crackerjack(driver)
 
     @staticmethod
-    def __get_game_name_crackerjack(driver: webdriver.Chrome):
+    def _get_game_name_crackerjack(driver: webdriver.Chrome):
         game_info = driver.find_element_by_class_name('game-info')
         return game_info.find_element_by_class_name('title').text
 
@@ -29,8 +29,8 @@ class IndiegalaHandler:
             sale_price = driver.find_element_by_class_name('current-price').text
             return Decimal(sale_price.replace('€', ''))
         else:
-            return self.__get_sale_price_crackerjack(driver)
+            return self._get_sale_price_crackerjack(driver)
 
     @staticmethod
-    def __get_sale_price_crackerjack(driver: webdriver.Chrome):
+    def _get_sale_price_crackerjack(driver: webdriver.Chrome):
         return Decimal(driver.find_element_by_id('price').text)

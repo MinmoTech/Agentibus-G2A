@@ -20,7 +20,7 @@ class G2AHandler:
 
     def lookup_price_of(self, game_name: str):
         driver = self.driver
-        steam_review = self.__get_steam_review_count(game_name)
+        steam_review = self._get_steam_review_count(game_name)
         driver.get('https://www.g2a.com/')
         with suppress(NoSuchElementException):
             modal_options_buttons = driver.find_element_by_class_name('modal-options__buttons')
@@ -33,7 +33,7 @@ class G2AHandler:
         search_bar.send_keys(Keys.RETURN)
         product_grids = driver.find_elements_by_class_name('products-grid__item')
         for product_grid in product_grids:
-            if self.__find_proper_card(product_grid, game_name, search_query):
+            if self._find_proper_card(product_grid, game_name, search_query):
                 with suppress(TimeoutException, NoSuchElementException):
                     WebDriverWait(driver, 10).until(
                         expected_conditions.visibility_of_element_located((By.CLASS_NAME, 'expander__button'))
@@ -42,13 +42,13 @@ class G2AHandler:
                     offer_expander_button.click()
                 offers = driver.find_elements_by_class_name('offer')
                 for offer in offers:
-                    rating_count = self.__get_g2a_rating_count(offer)
+                    rating_count = self._get_g2a_rating_count(offer)
                     if steam_review < 500:
-                        return self.__get_price(offer)
+                        return self._get_price(offer)
                     if rating_count > 1000:
-                        return self.__get_price(offer)
+                        return self._get_price(offer)
 
-    def __find_proper_card(self, product_grid, game_name: str, search_query: str):
+    def _find_proper_card(self, product_grid, game_name: str, search_query: str):
         card_wrapper = product_grid.find_element_by_class_name('card-wrapper')
         card_title_element = card_wrapper.find_element_by_class_name('Card__title')
         card_title = card_title_element.find_element_by_tag_name('a').text
@@ -62,7 +62,7 @@ class G2AHandler:
             return False
 
     @staticmethod
-    def __get_g2a_rating_count(offer):
+    def _get_g2a_rating_count(offer):
         rating_count_element = offer.find_element_by_class_name('rating-data')
         seller_info_percent = rating_count_element.find_element_by_class_name('seller-info__percent')
         separator = rating_count_element.find_element_by_class_name('separator')
@@ -70,7 +70,7 @@ class G2AHandler:
         return int(rating_count_dirty.replace(seller_info_percent.text, '').replace(separator.text, ''))
 
     @staticmethod
-    def __get_steam_review_count(game_name):
+    def _get_steam_review_count(game_name):
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
         driver = webdriver.Chrome(options=options)
@@ -82,7 +82,7 @@ class G2AHandler:
         return review_number
 
     @staticmethod
-    def __get_price(offer):
+    def _get_price(offer):
         price_element = offer.find_element_by_class_name('price')
         currency = price_element.find_element_by_class_name('price__currency')
         price = price_element.text.replace(currency.text, '')
