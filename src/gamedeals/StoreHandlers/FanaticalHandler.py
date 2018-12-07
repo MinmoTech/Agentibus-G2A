@@ -1,5 +1,7 @@
+import time
 from decimal import Decimal
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 
 class FanaticalHandler:
@@ -20,9 +22,30 @@ class FanaticalHandler:
             sale_price = driver.find_element_by_tag_name('h4').find_element_by_tag_name(
                 'span').find_element_by_tag_name(
                 'b').find_element_by_tag_name('span').find_element_by_tag_name('span').text
-            sale_price = Decimal(sale_price.replace('€', ''))
-            return sale_price
+            return Decimal(sale_price.replace('€', ''))
         else:
             promo_div = driver.find_element_by_class_name("promo-price")
             sale_price = promo_div.find_element_by_tag_name('span').find_element_by_class_name('span').text
             return Decimal(sale_price.replace('€', ''))
+
+
+def __click_cookie_banner(driver: webdriver.Chrome):
+    driver.find_element_by_class_name('cookie-btn').click()
+
+
+def crawl(driver: webdriver.Chrome):
+    driver.get('https://www.fanatical.com/en/on-sale')
+    __click_cookie_banner(driver)
+    links = []
+    while True:
+        time.sleep(2)
+        bundle_container = driver.find_element_by_class_name('bundle-page')
+        link_containers = bundle_container.find_elements_by_class_name('faux-block-link__overlay-link')
+        for container in link_containers:
+            if 'bundle' not in container.get_attribute('href'):
+                links.append(container.get_attribute('href'))
+        try:
+            driver.find_element_by_xpath('//button[@aria-label="Next"]').click()
+        except NoSuchElementException:
+            break
+    return links
