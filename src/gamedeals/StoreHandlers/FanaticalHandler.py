@@ -3,30 +3,32 @@ from decimal import Decimal
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
+from src.gamedeals import SteamHandler, G2AHandler
+from src.gamedeals.DataClasses import Game
 
-class FanaticalHandler:
-    def __init__(self, fanatical_driver: webdriver.Chrome, fanatical_url: str):
-        self.driver = fanatical_driver
-        self.url = fanatical_url
 
-    def get_game_name(self):
-        driver = self.driver
-        driver.get(self.url)
-        game_name = driver.find_element_by_tag_name('h1').text
-        return game_name
+def get_game_data(driver, game: Game):
+    driver.get(game.url)
+    game.name = driver.find_element_by_tag_name('h1').text
+    if driver.find_elements_by_class_name("stardeal-extras-container"):
+        game.sale_price = _get_stardeal_price()
+    else:
+        game.sale_price = _get_regular_sale_price(driver)
+    game.steam_reviews = SteamHandler.get_game_review_number(game.name, driver)
+    game.g2a_price = G2AHandler.get_price_of(game, driver)
 
-    def get_sale_price(self):
-        driver = self.driver
-        driver.get(self.url)
-        if not driver.find_elements_by_class_name("stardeal-extras-container"):
-            sale_price = driver.find_element_by_tag_name('h4').find_element_by_tag_name(
-                'span').find_element_by_tag_name(
-                'b').find_element_by_tag_name('span').find_element_by_tag_name('span').text
-            return Decimal(sale_price.replace('€', ''))
-        else:
-            promo_div = driver.find_element_by_class_name("promo-price")
-            sale_price = promo_div.find_element_by_tag_name('span').find_element_by_class_name('span').text
-            return Decimal(sale_price.replace('€', ''))
+
+def _get_regular_sale_price(driver: webdriver.Chrome):
+    sale_price = driver.find_element_by_tag_name('h4').find_element_by_tag_name(
+        'span').find_element_by_tag_name(
+        'b').find_element_by_tag_name('span').find_element_by_tag_name('span').text
+    return Decimal(sale_price.replace('€', ''))
+
+
+def _get_stardeal_price(driver: webdriver.Chrome):
+    promo_div = driver.find_element_by_class_name("promo-price")
+    sale_price = promo_div.find_element_by_tag_name('span').find_element_by_class_name('span').text
+    return Decimal(sale_price.replace('€', ''))
 
 
 def __click_cookie_banner(driver: webdriver.Chrome):
@@ -36,16 +38,19 @@ def __click_cookie_banner(driver: webdriver.Chrome):
 def crawl(driver: webdriver.Chrome):
     driver.get('https://www.fanatical.com/en/on-sale')
     __click_cookie_banner(driver)
-    links = []
+    game_list = []
     while True:
         time.sleep(2)
         bundle_container = driver.find_element_by_class_name('bundle-page')
         link_containers = bundle_container.find_elements_by_class_name('faux-block-link__overlay-link')
         for container in link_containers:
             if 'bundle' not in container.get_attribute('href'):
-                links.append(container.get_attribute('href'))
+                game = Game()
+                game.url = container.get_attribute('href')
+                game.site = 'Fanatical'
+                game_list.append(game)
         try:
             driver.find_element_by_xpath('//button[@aria-label="Next"]').click()
         except NoSuchElementException:
             break
-    return links
+    return game_list
