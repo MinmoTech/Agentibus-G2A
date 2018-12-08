@@ -8,17 +8,15 @@ class Game:
     url: str
     name: str
     site: str
-    steam_reviews: int
+    review_count: int
     sale_price: Decimal
     g2a_price: Decimal
+    sale_platform: str = 'Steam'
 
 
 @dataclass
 class Bundle:
     url: str
-    games: List[str]
-    game_singe_prices: Dict[str, Decimal]
-    game_steam_reviews: Dict[str, int]
-    site: str
+    games: List[Game]
     sale_price: Decimal
     g2a_price: Decimal

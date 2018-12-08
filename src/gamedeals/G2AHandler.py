@@ -21,7 +21,7 @@ def get_price_of(game: Game, driver: webdriver.Chrome):
         cookie_confirm_button.click()
     search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
     search_bar = search_bar_parent.find_element_by_tag_name('input')
-    search_query = game.name + ' Key Global'
+    search_query = game.name + f' {game.sale_platform} Key Global'
     _actions_send_keys(driver, search_bar, search_query)
     search_bar.send_keys(Keys.RETURN)
     product_grids = driver.find_elements_by_class_name('products-grid__item')
@@ -36,7 +36,7 @@ def get_price_of(game: Game, driver: webdriver.Chrome):
             offers = driver.find_elements_by_class_name('offer')
             for offer in offers:
                 rating_count = _get_g2a_rating_count(offer)
-                if game.steam_reviews < 500:
+                if game.review_count < 500:
                     return _get_price(offer)
                 if rating_count > 1000:
                     return _get_price(offer)
@@ -49,7 +49,7 @@ def _find_proper_card(product_grid, game_name: str, search_query: str):
     card_title = card_title_element.find_element_by_tag_name('a').text
     words_of_game_name = game_name.split()
     logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
-    if all(x in card_title for x in words_of_game_name) and len(search_query) + 1 >= len(card_title):
+    if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
         logger.info("Success!")
         card_wrapper.click()
         return True
