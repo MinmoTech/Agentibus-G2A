@@ -14,7 +14,7 @@ def get_game_data(driver, game: Game):
         game.sale_price = _get_stardeal_price()
     else:
         game.sale_price = _get_regular_sale_price(driver)
-    game.steam_reviews = SteamHandler.get_game_review_number(game.name, driver)
+    game.review_count = SteamHandler.get_game_review_number(game.name, driver)
     game.g2a_price = G2AHandler.get_price_of(game, driver)
 
 
