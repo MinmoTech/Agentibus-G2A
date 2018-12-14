@@ -4,9 +4,6 @@ from contextlib import contextmanager
 from decimal import Decimal
 from selenium import webdriver
 from src.gamedeals import Utility, ini_parser
-from src.gamedeals.StoreHandlers.FanaticalHandler import FanaticalHandler
-from src.gamedeals.G2AHandler import G2AHandler
-from src.gamedeals.SteamHandler import SteamHandler
 
 
 @contextmanager
