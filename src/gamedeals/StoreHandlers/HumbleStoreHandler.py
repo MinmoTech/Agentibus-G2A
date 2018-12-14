@@ -11,7 +11,7 @@ from src.gamedeals import SteamHandler, G2AHandler
 from src.gamedeals.DataClasses import Game
 
 
-def get_game_data(game: Game, driver: webdriver.Chrome):
+def set_game_data(game: Game, driver: webdriver.Chrome):
     driver.get(game.url)
     _do_age_check(driver)
     game.name = driver.find_element_by_class_name('human_name-view').text

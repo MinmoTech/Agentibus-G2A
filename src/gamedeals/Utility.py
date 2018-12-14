@@ -14,3 +14,4 @@ def calculate_net_price(original_price: Decimal):
         return net_price
     else:
         return Decimal(0.0)
+

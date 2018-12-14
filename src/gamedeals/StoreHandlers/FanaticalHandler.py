@@ -7,7 +7,7 @@ from src.gamedeals import SteamHandler, G2AHandler
 from src.gamedeals.DataClasses import Game
 
 
-def get_game_data(driver, game: Game):
+def set_game_data(driver, game: Game):
     driver.get(game.url)
     game.name = driver.find_element_by_tag_name('h1').text
     if driver.find_elements_by_class_name("stardeal-extras-container"):
