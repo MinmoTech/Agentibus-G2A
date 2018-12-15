@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
+from src.gamedeals import Utility
 from src.gamedeals.DataClasses import Game
 
 
@@ -47,8 +48,8 @@ def _find_proper_card(product_grid, game_name: str, search_query: str):
     card_wrappers = product_grid.find_elements_by_class_name('card-wrapper')
     for card_wrapper in card_wrappers:
         card_title_element = card_wrapper.find_element_by_class_name('Card__title')
-        card_title = card_title_element.find_element_by_tag_name('a').text.lower()
-        words_of_game_name = game_name.lower().split()
+        card_title = Utility.filter_special_characters(card_title_element.find_element_by_tag_name('a').text).lower()
+        words_of_game_name = Utility.filter_special_characters(game_name.lower()).split()
         logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
         if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
             card_wrapper.click()
