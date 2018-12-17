@@ -35,7 +35,6 @@ You are free to reuse this code in other projects (so long as you distibute sour
 This project uses:
 
 - https://github.com/SeleniumHQ/selenium[Selenium]
-- https://github.com/praw-dev/praw[PRAW]
 - https://github.com/python-telegram-bot/python-telegram-bot[python-telegram-bot]
 
 NOTE: This project has been set up using PyScaffold 3.0.3. For details and usage information on PyScaffold see http://pyscaffold.org/.
