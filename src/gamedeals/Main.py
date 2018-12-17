@@ -1,9 +1,12 @@
 import logging
 import pathlib
+import time
+import traceback
 from contextlib import contextmanager
 from decimal import Decimal
 from typing import List
 
+import schedule
 from selenium import webdriver
 from src.gamedeals import Utility, ini_parser
 from src.gamedeals.BundleHandlers import HumbleBundleHandler
@@ -21,7 +24,7 @@ def managed_chromedriver(options):
         chrome_driver.quit()
 
 
-if __name__ == "__main__":
+def job():
     pathlib.Path('./logs').mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
@@ -30,7 +33,6 @@ if __name__ == "__main__":
             logging.FileHandler("./logs/GameDeals.log"),
             logging.StreamHandler()
         ])
-    logger = logging.getLogger()
 
     telegram = TelegramSender()
     opts = webdriver.ChromeOptions()
@@ -59,3 +61,15 @@ if __name__ == "__main__":
             if bundle.profit_margin > ini_parser.get_net_profit_percentage():
                 telegram.send_message(
                     f"Bundle deal found:\n name: {bundle.name}\n price: {bundle.sale_price}\n prifit margin: {bundle.profit_margin * 100}%\n url: {bundle.url}")
+
+
+schedule.every(6).hours.do(job)
+while True:
+    try:
+        schedule.run_pending()
+    except Exception:
+        time.sleep(60)
+        my_stacktrace = traceback.format_exc()
+        sender = TelegramSender()
+        sender.send_message(my_stacktrace)
+    time.sleep(10)

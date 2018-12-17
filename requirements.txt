@@ -1,4 +1,4 @@
 pytest
 selenium
-praw
 python-telegram-bot
+schedule
