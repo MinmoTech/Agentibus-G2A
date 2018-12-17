@@ -9,7 +9,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 from src.gamedeals import Utility
-from src.gamedeals.DataClasses import Game
+from src.gamedeals.Product import Game
 
 
 def get_price_of(game: Game, driver: webdriver.Chrome):

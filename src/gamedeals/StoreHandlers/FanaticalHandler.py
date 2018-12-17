@@ -3,8 +3,8 @@ from decimal import Decimal
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
-from src.gamedeals import SteamHandler, G2AHandler
-from src.gamedeals.DataClasses import Game
+from src.gamedeals import SteamHandler, G2AHandler, Product
+from src.gamedeals.Product import Game
 
 
 def set_game_data(driver, game: Game):
@@ -16,6 +16,7 @@ def set_game_data(driver, game: Game):
         game.sale_price = _get_regular_sale_price(driver)
     game.review_count = SteamHandler.get_game_review_number(game.name, driver)
     game.g2a_price = G2AHandler.get_price_of(game, driver)
+    Product.set_game_meta_data(game)
 
 
 def _get_regular_sale_price(driver: webdriver.Chrome):
