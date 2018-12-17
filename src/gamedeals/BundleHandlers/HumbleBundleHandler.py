@@ -7,8 +7,8 @@ from typing import List
 
 from selenium import webdriver
 
-from src.gamedeals import G2AHandler, SteamHandler, Utility
-from src.gamedeals.DataClasses import Bundle, Game
+from src.gamedeals import G2AHandler, SteamHandler, Utility, Product
+from src.gamedeals.Product import Bundle, Game
 
 
 @contextmanager
@@ -42,8 +42,9 @@ def set_bundle_data(driver: webdriver.Chrome, bundle: Bundle) -> List[str]:
     bundle.sale_price = _get_total_sale_price(driver)
     for game in bundle.games:
         bundle.g2a_price = bundle.g2a_price + game.g2a_price
-        bundle.g2a_price_after_deductions = bundle.g2a_price_after_deductions + Utility.calculate_net_price(
+        bundle.after_commission_price = bundle.after_commission_price + Utility.calculate_net_price(
             game.g2a_price)
+    Product.set_bundle_meta_data(bundle)
 
 
 def _get_total_sale_price(driver: webdriver.Chrome) -> Decimal:
