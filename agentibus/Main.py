@@ -7,11 +7,11 @@ from typing import List
 
 import schedule
 from selenium import webdriver
-from gamedeals import ini_parser
-from gamedeals.BundleHandlers import HumbleBundleHandler
-from gamedeals.Product import Game
-from gamedeals.StoreHandlers import FanaticalHandler, HumbleStoreHandler
-from gamedeals.TelegramSender import TelegramSender
+from agentibus import ini_parser
+from agentibus.BundleHandlers import HumbleBundleHandler
+from agentibus.Product import Game
+from agentibus.StoreHandlers import FanaticalHandler, HumbleStoreHandler
+from agentibus.TelegramSender import TelegramSender
 
 
 @contextmanager

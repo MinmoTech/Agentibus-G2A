@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import List
 
-from gamedeals import Utility
+from agentibus import Utility
 
 
 @dataclass
