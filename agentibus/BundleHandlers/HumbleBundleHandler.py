@@ -5,7 +5,7 @@ from typing import List
 
 from selenium import webdriver
 
-from agentibus import Utility, G2AHandler, SteamHandler, Product
+from agentibus import Utility, G2AHandler, SteamHandler, Product, Main
 from agentibus.Product import Bundle, Game
 
 
@@ -23,9 +23,7 @@ def set_bundle_data(driver: webdriver.Chrome, bundle: Bundle) -> List[str]:
     bundle.name = driver.find_element_by_class_name('hero-title').text
     bundle.site = 'HumbleBundle'
     game_name_containers = driver.find_elements_by_class_name('dd-image-box-text')
-    opts = webdriver.ChromeOptions()
-    opts.add_argument('--disable-notifications')
-    opts.add_argument('headless')
+    opts = Main.get_chromedriver_options()
     with managed_chromedriver(opts) as nested_driver:
         nested_driver.set_window_size(1800, 1070)
         nested_driver.implicitly_wait(2)
