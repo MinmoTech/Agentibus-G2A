@@ -64,15 +64,23 @@ def job():
 
 def execute():
     schedule.every(6).hours.do(job)
+    try:
+        job()
+    except Exception:
+        handle_exception()
     while True:
         try:
             schedule.run_pending()
         except Exception:
-            time.sleep(60)
-            my_stacktrace = traceback.format_exc()
-            sender = TelegramSender()
-            sender.send_message(my_stacktrace)
-        time.sleep(10)
+            handle_exception()
+        time.sleep(30)
+
+
+def handle_exception():
+    time.sleep(60)
+    my_stacktrace = traceback.format_exc()
+    sender = TelegramSender()
+    sender.send_message(my_stacktrace)
 
 
 if __name__ == '__main__':

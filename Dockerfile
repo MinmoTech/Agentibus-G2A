@@ -9,8 +9,8 @@ RUN apk add gcc \
     apk del openssl-dev \
         musl-dev \
         libffi-dev && \
-    rm -rf GameDeals/
-VOLUME gamedeals/resources
-ENV PYTHONPATH /home
-WORKDIR gamedeals/
-CMD ["python", "-u", "Main.py"]
+    rm -rf GameDeals/ && \
+    mkdir -p gamedeals/resources/
+VOLUME gamedeals/resources/
+ENV AGENTIBUS_RESOURCES gamedeals/resources/
+CMD ["python", "-u", "agentibus"]
