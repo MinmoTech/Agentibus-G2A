@@ -9,4 +9,4 @@ RUN apk add gcc \
     apk del openssl-dev \
         musl-dev \
         libffi-dev
-CMD ["python", "-u", "./QuereinsteigerReminder.py"]
+CMD ["python", "-u", "./src/gamedeals/Main.py"]
