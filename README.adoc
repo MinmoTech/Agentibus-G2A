@@ -1,8 +1,14 @@
 = GameDeals
 Doc Writer <julius.dehner@gmail.com>
 
-== Work in progress!
-The Project will probably change in that it scrapes deals directly from the deal sites instead of reddit, as this should give better performance (less regex) and better coverage.
+== In beta state now!
+Preferred (and currently the only supported) installation method is docker.
+
+Installation steps:
+
+- install docker https://docs.docker.com/toolbox/overview/[Windows]|[Ubuntu]
+- create telegram bot
+- create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
 
 == Description
 
