@@ -9,4 +9,6 @@ RUN apk add gcc \
     apk del openssl-dev \
         musl-dev \
         libffi-dev
-CMD ["python", "-u", "./src/gamedeals/Main.py"]
+VOLUME /home/src/gamedeals/resources
+WORKDIR /home/src/gamedeals/
+CMD ["python", "-u", "Main.py"]
