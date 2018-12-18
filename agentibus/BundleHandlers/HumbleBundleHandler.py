@@ -5,8 +5,8 @@ from typing import List
 
 from selenium import webdriver
 
-from gamedeals import Utility, G2AHandler, SteamHandler, Product
-from gamedeals.Product import Bundle, Game
+from agentibus import Utility, G2AHandler, SteamHandler, Product
+from agentibus.Product import Bundle, Game
 
 
 @contextmanager

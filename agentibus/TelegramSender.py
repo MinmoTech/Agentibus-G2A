@@ -1,6 +1,6 @@
 import telegram
 
-from gamedeals import ini_parser
+from agentibus import ini_parser
 
 
 class TelegramSender:

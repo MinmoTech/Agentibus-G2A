@@ -8,8 +8,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from gamedeals import Utility
-from gamedeals.Product import Game
+from agentibus import Utility
+from agentibus.Product import Game
 
 
 def get_price_of(game: Game, driver: webdriver.Chrome):

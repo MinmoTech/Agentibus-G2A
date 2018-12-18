@@ -3,8 +3,8 @@ from decimal import Decimal
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
-from gamedeals import G2AHandler, SteamHandler, Product
-from gamedeals.Product import Game
+from agentibus import G2AHandler, SteamHandler, Product
+from agentibus.Product import Game
 
 
 def set_game_data(driver, game: Game):
