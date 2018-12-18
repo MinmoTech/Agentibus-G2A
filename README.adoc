@@ -4,24 +4,32 @@ Doc Writer <julius.dehner@gmail.com>
 == In beta state now!
 Preferred (and currently the only supported) installation method is docker.
 
-Installation steps:
+=== Installation steps:
 
 - install docker https://docs.docker.com/toolbox/overview/[Windows]|[Ubuntu]
-- create telegram bot
+- create telegram bot by talking to https://t.me/botfather[BotFather] and note your access token
+- get your chat id by talking to @get_id_bot and using the "/my_id" command
 - create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
+- now start the docker container with the following command (replace path/to/folder/which/contains/configuration.ini with the folder in which you have your configuration.ini)
+
+ docker run --name gamedeals --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:home/src/gamedeals/resources juligreen/gamedeals
+
+=== Currently supported sites
+
+- https://www.humblebundle.com/[HumbleBundle]
+- https://www.humblebundle.com/store[Humble Store]
+- https://www.fanatical.com/[Fanatical Store]
 
 == Description
 
 Finished features:
 
-- get current deals from r/GameDeals
-- check if the game has at least 1000 ratings on steam
+- check if a game has at least 1000 ratings on steam (less relevant for bundles)
 - compare prices with G2A
+- message you on Telegram, when there is a certain profit margin by selling the game on G2A
 
 TODOs:
 
-- merge multiple classes into fewer modules (python best practice)
-- message you on Telegram, when there is a certain profit margin by selling the game on G2A
 - test cases
 - proper logging
 
