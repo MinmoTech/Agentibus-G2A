@@ -1,9 +1,8 @@
 FROM python:3.7-alpine
 COPY . GameDeals
-RUN wget -q "https://chromedriver.storage.googleapis.com/72.0.3626.7/chromedriver_linux64.zip" -O /tmp/chromedriver.zip \
-    && unzip /tmp/chromedriver.zip -d /usr/bin/ \
-    && rm /tmp/chromedriver.zip
 RUN apk add gcc \
+        chromium \
+        chromium-chromedriver \
         musl-dev \
         python3-dev \
         libffi-dev \
