@@ -1,7 +1,7 @@
-= GameDeals
+= Agentibus G2A
 Doc Writer <julius.dehner@gmail.com>
 
-== In beta state now!
+== Now in beta!
 Preferred (and currently the only supported) installation method is docker.
 
 === Installation steps:
@@ -12,7 +12,7 @@ Preferred (and currently the only supported) installation method is docker.
 - create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
 - now start the docker container with the following command (replace path/to/folder/which/contains/configuration.ini with the folder in which you have your configuration.ini)
 
- docker run --name gamedeals --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:/home/src/gamedeals/resources juligreen/gamedeals
+ docker run --name agentibus --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:/home/src/gamedeals/resources juligreen/agentibus-g2a
 
 === Currently supported sites
 
@@ -43,6 +43,10 @@ Features I might implement:
 == Open Source
 
 You are free to reuse this code in other projects (so long as you distibute source code with binarys) as stated by the GPL License but I'd be very happy if you would message me at julius<dot>dehner<at>gmail<dot>com and tell me what you're using it for, just because I'm very curious :)
+
+== Trivia
+
+Agentibus is latin for efficient :)
 
 == Dependencies
 
