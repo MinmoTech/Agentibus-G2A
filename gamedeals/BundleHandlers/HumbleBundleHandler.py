@@ -1,5 +1,3 @@
-import logging
-import pathlib
 import re
 from contextlib import contextmanager
 from decimal import Decimal
@@ -7,8 +5,8 @@ from typing import List
 
 from selenium import webdriver
 
-from src.gamedeals import G2AHandler, SteamHandler, Utility, Product
-from src.gamedeals.Product import Bundle, Game
+from gamedeals import Utility, G2AHandler, SteamHandler, Product
+from gamedeals.Product import Bundle, Game
 
 
 @contextmanager

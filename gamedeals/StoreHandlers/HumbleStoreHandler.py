@@ -7,8 +7,8 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.select import Select
 
-from src.gamedeals import SteamHandler, G2AHandler, Utility, Product
-from src.gamedeals.Product import Game
+from gamedeals import G2AHandler, SteamHandler, Product
+from gamedeals.Product import Game
 
 
 def set_game_data(game: Game, driver: webdriver.Chrome):
