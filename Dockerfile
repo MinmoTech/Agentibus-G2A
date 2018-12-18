@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 COPY gamedeals gamedeals
-COPY LICENSE.txt README.adoc requirements.txt gamedeals/
+COPY LICENSE.txt __init__.py README.adoc requirements.txt gamedeals/
 RUN apk add gcc \
     musl-dev \
     python3-dev \
