@@ -6,7 +6,7 @@ RUN apk add gcc \
     python3-dev \
     libffi-dev \
     openssl-dev && \
-    pip install -r GameDeals/requirements.txt && \
+    pip install -r gamedeals/requirements.txt && \
     apk del openssl-dev \
         musl-dev \
         libffi-dev
