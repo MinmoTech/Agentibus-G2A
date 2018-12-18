@@ -47,7 +47,7 @@ def job():
         game_list = fanatical_games + humble_games
         for game in game_list:
             if game.profit_margin > ini_parser.get_net_profit_percentage():
-                telegram.send_message(
+                telegram.send(
                     f"Game deal found:\n name: {game.name}\n price: {game.sale_price}\n prifit margin: {game.profit_margin * 100}%\n url: {game.url}")
 
         humble_bundles = HumbleBundleHandler.crawl(driver)
@@ -56,7 +56,7 @@ def job():
         bundle_list = humble_bundles
         for bundle in bundle_list:
             if bundle.profit_margin > ini_parser.get_net_profit_percentage():
-                telegram.send_message(
+                telegram.send(
                     f"Bundle deal found:\n name: {bundle.name}\n price: {bundle.sale_price}\n prifit margin: {bundle.profit_margin * 100}%\n url: {bundle.url}")
 
 
@@ -87,7 +87,8 @@ def handle_exception():
     time.sleep(60)
     my_stacktrace = traceback.format_exc()
     sender = TelegramSender()
-    sender.send_message(my_stacktrace)
+    sender.send(f'<code>{my_stacktrace}<code>')
+    logging.getLogger().error(my_stacktrace)
 
 
 if __name__ == '__main__':
