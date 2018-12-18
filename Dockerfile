@@ -13,6 +13,5 @@ RUN apk add gcc \
         libffi-dev && \
     rm -rf GameDeals/ && \
     mkdir -p gamedeals/resources/
-VOLUME gamedeals/resources/
 ENV AGENTIBUS_RESOURCES gamedeals/resources/
 CMD ["agentibus"]
