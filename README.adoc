@@ -12,7 +12,7 @@ Preferred (and currently the only supported) installation method is docker.
 - create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
 - now start the docker container with the following command (replace path/to/folder/which/contains/configuration.ini with the folder in which you have your configuration.ini)
 
- docker run --name agentibus --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:/home/gamedeals/resources juligreen/agentibus-g2a
+ docker run -d --name agentibus --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:/home/gamedeals/resources juligreen/agentibus-g2a
 
 
 === Currently supported sites
