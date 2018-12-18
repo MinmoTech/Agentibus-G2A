@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
-COPY src/ GameDeals/src
-COPY LICENSE.txt README.adoc requirements.txt GameDeals/
+COPY gamedeals gamedeals
+COPY LICENSE.txt README.adoc requirements.txt gamedeals/
 RUN apk add gcc \
     musl-dev \
     python3-dev \
@@ -10,6 +10,5 @@ RUN apk add gcc \
     apk del openssl-dev \
         musl-dev \
         libffi-dev
-VOLUME src/gamedeals/resources
-WORKDIR GameDeals/src/gamedeals/
-CMD ["python", "-u", "Main.py"]
+VOLUME gamedeals/resources
+CMD ["python", "-u", "gamedeals/Main.py"]

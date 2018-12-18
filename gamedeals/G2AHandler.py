@@ -4,12 +4,12 @@ from contextlib import suppress
 from decimal import Decimal
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-from src.gamedeals import Utility
-from src.gamedeals.Product import Game
+from gamedeals import Utility
+from gamedeals.Product import Game
 
 
 def get_price_of(game: Game, driver: webdriver.Chrome):

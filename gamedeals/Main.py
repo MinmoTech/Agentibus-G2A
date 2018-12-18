@@ -3,16 +3,15 @@ import pathlib
 import time
 import traceback
 from contextlib import contextmanager
-from decimal import Decimal
 from typing import List
 
 import schedule
 from selenium import webdriver
-from src.gamedeals import Utility, ini_parser
-from src.gamedeals.BundleHandlers import HumbleBundleHandler
-from src.gamedeals.Product import Game
-from src.gamedeals.StoreHandlers import FanaticalHandler, HumbleStoreHandler
-from src.gamedeals.TelegramSender import TelegramSender
+from gamedeals import ini_parser
+from gamedeals.BundleHandlers import HumbleBundleHandler
+from gamedeals.Product import Game
+from gamedeals.StoreHandlers import FanaticalHandler, HumbleStoreHandler
+from gamedeals.TelegramSender import TelegramSender
 
 
 @contextmanager
