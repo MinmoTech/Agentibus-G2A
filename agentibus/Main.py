@@ -34,9 +34,7 @@ def job():
         ])
 
     telegram = TelegramSender()
-    opts = webdriver.ChromeOptions()
-    opts.add_argument('--disable-notifications')
-    opts.add_argument('headless')
+    opts = get_chromedriver_options()
     with managed_chromedriver(opts) as driver:
         driver.set_window_size(1800, 1070)
         driver.implicitly_wait(2)
@@ -60,6 +58,15 @@ def job():
             if bundle.profit_margin > ini_parser.get_net_profit_percentage():
                 telegram.send_message(
                     f"Bundle deal found:\n name: {bundle.name}\n price: {bundle.sale_price}\n prifit margin: {bundle.profit_margin * 100}%\n url: {bundle.url}")
+
+
+def get_chromedriver_options():
+    options = webdriver.ChromeOptions()
+    options.add_argument('--disable-notifications')
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    return options
 
 
 def execute():
