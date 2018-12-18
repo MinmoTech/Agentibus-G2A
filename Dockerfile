@@ -14,4 +14,5 @@ RUN apk add gcc \
     rm -rf GameDeals/ && \
     mkdir -p gamedeals/resources/
 ENV AGENTIBUS_RESOURCES gamedeals/resources/
+ENV PYTHONUNBUFFERED 0
 CMD ["agentibus"]
