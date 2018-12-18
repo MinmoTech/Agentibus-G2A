@@ -13,4 +13,4 @@ RUN apk add gcc \
     mkdir -p gamedeals/resources/
 VOLUME gamedeals/resources/
 ENV AGENTIBUS_RESOURCES gamedeals/resources/
-CMD ["python", "-u", "agentibus"]
+CMD ["agentibus"]
