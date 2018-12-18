@@ -11,4 +11,5 @@ RUN apk add gcc \
         musl-dev \
         libffi-dev
 VOLUME gamedeals/resources
+WORKDIR gamedeals/
 CMD ["python", "-u", "gamedeals/Main.py"]
