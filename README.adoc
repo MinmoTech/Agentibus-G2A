@@ -36,5 +36,6 @@ This project uses:
 
 - https://github.com/SeleniumHQ/selenium[Selenium]
 - https://github.com/python-telegram-bot/python-telegram-bot[python-telegram-bot]
+- https://github.com/dbader/schedule[Schedule] - huge thanks to Dan Bader for this awesome library and his great python books!
 
 NOTE: This project has been set up using PyScaffold 3.0.3. For details and usage information on PyScaffold see http://pyscaffold.org/.
