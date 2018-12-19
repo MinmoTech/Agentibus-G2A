@@ -89,7 +89,7 @@ def handle_exception():
     my_stacktrace = traceback.format_exc()
     logging.getLogger().error(my_stacktrace)
     sender = TelegramSender()
-    sender.send(my_stacktrace)
+    sender.send(my_stacktrace, code_in_message=True)
 
 
 if __name__ == '__main__':
