@@ -27,7 +27,7 @@ def set_game_data(driver, game: Game):
         game.sale_price = _get_regular_sale_price(driver)
     opts = Main.get_chromedriver_options()
     with managed_chromedriver(opts) as nested_driver:
-        logging.getLogger().info(nested_driver.options)
+        logging.getLogger().info(repr(nested_driver))
         game.review_count = SteamHandler.get_game_review_number(game.name, nested_driver)
         game.g2a_price = G2AHandler.get_price_of(game, nested_driver)
         Product.set_game_meta_data(game)
