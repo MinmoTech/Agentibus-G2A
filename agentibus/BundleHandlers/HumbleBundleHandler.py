@@ -1,12 +1,21 @@
 import re
+from contextlib import contextmanager
 from decimal import Decimal
 from typing import List
 
 from selenium import webdriver
 
 from agentibus import Utility, G2AHandler, SteamHandler, Product, Main
-from agentibus.Main import managed_chromedriver
 from agentibus.Product import Bundle, Game
+
+
+@contextmanager
+def managed_chromedriver(options):
+    try:
+        chrome_driver = webdriver.Chrome(options=options)
+        yield chrome_driver
+    finally:
+        chrome_driver.quit()
 
 
 def set_bundle_data(driver: webdriver.Chrome, bundle: Bundle) -> List[str]:
