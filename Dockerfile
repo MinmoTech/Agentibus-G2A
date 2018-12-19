@@ -2,8 +2,9 @@ FROM python:3.7-stretch
 COPY . GameDeals
 RUN apt-get update && apt-get install unzip
 RUN wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb \
-    && dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install \
+    && dpkg -i google-chrome-unstable_current_amd64.deb; apt-get -fy install \
     && wget https://chromedriver.storage.googleapis.com/2.45/chromedriver_linux64.zip \
+    && mkdir -p /usr/local/bin/ \
     && unzip chromedriver_linux64.zip \
     && mv chromedriver /usr/local/bin/chromedriver \
 RUN pip install GameDeals/ && \
