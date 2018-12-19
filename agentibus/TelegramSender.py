@@ -16,7 +16,7 @@ class TelegramSender:
             message = message[self.MAX_MESSAGE_LENGTH:]
             if len(message) > 0:
                 self.send(f'<code>{message[:self.MAX_MESSAGE_LENGTH]}</code>')
-            self.bot.send_document(ini_parser.get_telegram_chat_id(), open('/logs/GameDeals.log'))
+            self.bot.send_document(ini_parser.get_telegram_chat_id(), open('/logs/GameDeals.log', 'rb'))
         else:
             self.bot.send_message(ini_parser.get_telegram_chat_id(), message[:self.MAX_MESSAGE_LENGTH],
                                   parse_mode='HTML')
