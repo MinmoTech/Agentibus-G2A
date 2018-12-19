@@ -1,5 +1,6 @@
 import collections
 import time
+from contextlib import contextmanager
 from decimal import Decimal
 from typing import List
 
@@ -8,8 +9,16 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.select import Select
 
 from agentibus import G2AHandler, SteamHandler, Product, Main
-from agentibus.Main import managed_chromedriver
 from agentibus.Product import Game
+
+
+@contextmanager
+def managed_chromedriver(options):
+    try:
+        chrome_driver = webdriver.Chrome(options=options)
+        yield chrome_driver
+    finally:
+        chrome_driver.quit()
 
 
 def set_game_data(game: Game, driver: webdriver.Chrome):
