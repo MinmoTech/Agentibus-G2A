@@ -87,9 +87,9 @@ def execute():
 def handle_exception():
     time.sleep(60)
     my_stacktrace = traceback.format_exc()
+    logging.getLogger().error(my_stacktrace)
     sender = TelegramSender()
     sender.send(my_stacktrace)
-    logging.getLogger().error(my_stacktrace)
 
 
 if __name__ == '__main__':
