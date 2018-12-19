@@ -29,7 +29,7 @@ def job():
         level=logging.INFO,
         format="%(asctime)s  %(message)s",
         handlers=[
-            logging.FileHandler("./logs/GameDeals.log"),
+            logging.FileHandler("/logs/GameDeals.log"),
             logging.StreamHandler()
         ])
 
@@ -66,7 +66,7 @@ def get_chromedriver_options():
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
-    options.add_argument("--disable-setuid-sandbox")
+    options.add_argument('--disable-setuid-sandbox')
     return options
 
 
@@ -89,7 +89,7 @@ def handle_exception():
     my_stacktrace = traceback.format_exc()
     logging.getLogger().error(my_stacktrace)
     sender = TelegramSender()
-    sender.send(my_stacktrace, code_in_message=True)
+    sender.send(my_stacktrace, error_message=True)
 
 
 if __name__ == '__main__':
