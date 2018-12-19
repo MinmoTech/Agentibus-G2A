@@ -13,14 +13,12 @@ class TelegramSender:
             self.bot.send_message(ini_parser.get_telegram_chat_id(),
                                   f'<code>{message[:self.MAX_MESSAGE_LENGTH]}</code>',
                                   parse_mode='HTML')
+            message = message[self.MAX_MESSAGE_LENGTH:]
             if len(message) > 0:
-                message = message[self.MAX_MESSAGE_LENGTH:]
-                self.send(ini_parser.get_telegram_chat_id(), f'<code>{message[:self.MAX_MESSAGE_LENGTH]}</code>',
-                          parse_mode='HTML')
-
+                self.send(f'<code>{message[:self.MAX_MESSAGE_LENGTH]}</code>')
         else:
             self.bot.send_message(ini_parser.get_telegram_chat_id(), message[:self.MAX_MESSAGE_LENGTH],
                                   parse_mode='HTML')
+            message = message[self.MAX_MESSAGE_LENGTH:]
             if len(message) > 0:
-                message = message[self.MAX_MESSAGE_LENGTH:]
-                self.send(ini_parser.get_telegram_chat_id(), message[:self.MAX_MESSAGE_LENGTH], parse_mode='HTML')
+                self.send(message[:self.MAX_MESSAGE_LENGTH])
