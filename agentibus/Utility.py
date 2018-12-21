@@ -3,7 +3,7 @@ from decimal import Decimal
 
 
 def filter_special_characters(some_string: str):
-    valid_chars = "%s%s" % (string.ascii_letters, string.digits)
+    valid_chars = "%s%s " % (string.ascii_letters, string.digits)
     return ''.join(c for c in some_string if c in valid_chars)
 
 
