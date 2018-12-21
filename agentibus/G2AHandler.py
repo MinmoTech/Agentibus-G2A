@@ -81,7 +81,7 @@ def _find_proper_card(product_grid, game_name: str, search_query: str):
             else:
                 logger.info("Could not find game on G2A")
     except StaleElementReferenceException:
-        pass
+        logger.warning('Could not get game because of stale element in _find_proper_card')
     return False
 
 
