@@ -27,11 +27,9 @@ def set_game_data(game: Game, driver: webdriver.Chrome):
     game.name = driver.find_element_by_class_name('human_name-view').text
     game.sale_price = Decimal(
         driver.find_element_by_class_name('current-price').text.replace('€', '').replace(',', '.'))
-    opts = Main.get_chromedriver_options()
-    with managed_chromedriver(opts) as nested_driver:
-        game.review_count = SteamHandler.get_game_review_number(game.name, nested_driver)
-        game.g2a_price = G2AHandler.get_price_of(game, nested_driver)
-        game.sale_platform = _get_platform(driver)
+    game.sale_platform = _get_platform(driver)
+    game.review_count = SteamHandler.get_game_review_number(game.name, driver)
+    game.g2a_price = G2AHandler.get_price_of(game, driver)
     Product.set_game_meta_data(game)
 
 

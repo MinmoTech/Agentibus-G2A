@@ -4,6 +4,7 @@ from contextlib import contextmanager
 from decimal import Decimal
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 
 from agentibus import G2AHandler, SteamHandler, Product, Main
 from agentibus.Product import Game
@@ -21,16 +22,14 @@ def managed_chromedriver(options):
 def set_game_data(driver, game: Game):
     driver.get(game.url)
     game.name = driver.find_element_by_tag_name('h1').text
+    logging.getLogger().info(f'Getting {game.name} info.')
     if driver.find_elements_by_class_name("stardeal-extras-container"):
         game.sale_price = _get_stardeal_price()
     else:
         game.sale_price = _get_regular_sale_price(driver)
-    opts = Main.get_chromedriver_options()
-    with managed_chromedriver(opts) as nested_driver:
-        logging.getLogger().info(repr(nested_driver))
-        game.review_count = SteamHandler.get_game_review_number(game.name, nested_driver)
-        game.g2a_price = G2AHandler.get_price_of(game, nested_driver)
-        Product.set_game_meta_data(game)
+    game.review_count = SteamHandler.get_game_review_number(game.name, driver)
+    game.g2a_price = G2AHandler.get_price_of(game, driver)
+    Product.set_game_meta_data(game)
 
 
 def _get_regular_sale_price(driver: webdriver.Chrome):
@@ -51,11 +50,19 @@ def __click_cookie_banner(driver: webdriver.Chrome):
 
 
 def crawl(driver: webdriver.Chrome):
+    logging.getLogger().info('Crawling Fanatical')
     driver.get('https://www.fanatical.com/en/on-sale')
+    if 'Apply this code to get an extra' in driver.page_source:
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
     __click_cookie_banner(driver)
+    if 'Apply this code to get an extra' in driver.page_source:
+        webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
     game_list = []
+    counter = 0
     while True:
         time.sleep(2)
+        if 'Apply this code to get an extra' in driver.page_source:
+            webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         bundle_container = driver.find_element_by_class_name('bundle-page')
         link_containers = bundle_container.find_elements_by_class_name('faux-block-link__overlay-link')
         for container in link_containers:
@@ -66,6 +73,8 @@ def crawl(driver: webdriver.Chrome):
                 game_list.append(game)
         try:
             driver.find_element_by_xpath('//button[@aria-label="Next"]').click()
+            counter += 1
         except NoSuchElementException:
+            logging.getLogger().info(f'Craweled {counter} pages and found {len(game_list)} games.')
             break
     return game_list

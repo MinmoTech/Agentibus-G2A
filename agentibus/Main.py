@@ -24,7 +24,7 @@ def managed_chromedriver(options):
 
 
 def job():
-    pathlib.Path('./logs').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('/logs').mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s  %(message)s",
@@ -63,7 +63,7 @@ def job():
 def get_chromedriver_options():
     options = webdriver.ChromeOptions()
     options.add_argument('--disable-notifications')
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-setuid-sandbox')
     return options
