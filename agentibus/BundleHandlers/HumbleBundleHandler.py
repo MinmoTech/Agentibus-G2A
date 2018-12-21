@@ -11,8 +11,8 @@ from agentibus.Product import Bundle, Game
 
 @contextmanager
 def managed_chromedriver(options):
+    chrome_driver = webdriver.Chrome(options=options)
     try:
-        chrome_driver = webdriver.Chrome(options=options)
         yield chrome_driver
     finally:
         chrome_driver.quit()

@@ -1,6 +1,5 @@
 import logging
 import time
-from contextlib import contextmanager
 from decimal import Decimal
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -8,15 +7,6 @@ from selenium.webdriver.common.keys import Keys
 
 from agentibus import G2AHandler, SteamHandler, Product, Main
 from agentibus.Product import Game
-
-
-@contextmanager
-def managed_chromedriver(options):
-    try:
-        chrome_driver = webdriver.Chrome(options=options)
-        yield chrome_driver
-    finally:
-        chrome_driver.quit()
 
 
 def set_game_data(driver, game: Game):
