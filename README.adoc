@@ -6,13 +6,14 @@ Preferred (and currently the only supported) installation method is docker.
 
 === Installation steps:
 
-- install docker https://docs.docker.com/toolbox/overview/[Windows]|[Ubuntu]
+- install docker https://docs.docker.com/toolbox/overview/[Windows]|https://docs.docker.com/install/linux/docker-ce/ubuntu/[Ubuntu]
 - create telegram bot by talking to https://t.me/botfather[BotFather] and note your access token
 - get your chat id by talking to @get_id_bot and using the "/my_id" command
 - create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
 - now start the docker container with the following command (replace path/to/folder/which/contains/configuration.ini with the folder in which you have your configuration.ini)
 
- docker run -d --name agentibus --restart unless-stopped -v path/to/folder/which/contains/configuration.ini:/gamedeals/resources juligreen/agentibus-g2a
+ docker run -d --name agentibus --restart unless-stopped --shm-size=2g -v path/to/folder/which/contains/configuration.ini:/gamedeals/resources juligreen/agentibus-g2a
+The --shm-size=2g flag makes the host share memory with the container which prevents Chrome from crashing. See https://bugs.chromium.org/p/chromium/issues/detail?id=519952[this link].
 
 
 === Currently supported sites
