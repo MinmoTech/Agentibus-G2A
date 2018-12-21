@@ -13,6 +13,7 @@ Preferred (and currently the only supported) installation method is docker.
 - now start the docker container with the following command (replace path/to/folder/which/contains/configuration.ini with the folder in which you have your configuration.ini)
 
  docker run -d --name agentibus --restart unless-stopped --shm-size=2g -v path/to/folder/which/contains/configuration.ini:/gamedeals/resources juligreen/agentibus-g2a
+
 The --shm-size=2g flag makes the host share memory with the container which prevents Chrome from crashing. See https://bugs.chromium.org/p/chromium/issues/detail?id=519952[this link].
 
 
