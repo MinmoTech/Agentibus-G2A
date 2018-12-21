@@ -2,6 +2,8 @@ FROM python:3.7-alpine
 COPY . GameDeals
 RUN apk add gcc \
     musl-dev \
+    chromium \
+    chromium-chromedriver \
     python3-dev \
     libffi-dev \
     openssl-dev && \
