@@ -46,6 +46,7 @@ def _click_cookie_banner(driver: webdriver.Chrome):
 
 
 def _find_right_game(game: Game, driver: webdriver.Chrome, search_query):
+    time.sleep(2)
     product_grids = driver.find_elements_by_class_name('products-grid__item')
     for product_grid in product_grids:
         if _find_proper_card(product_grid, game.name, search_query):
