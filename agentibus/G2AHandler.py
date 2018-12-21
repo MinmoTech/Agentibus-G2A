@@ -4,7 +4,7 @@ from contextlib import suppress
 from decimal import Decimal
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
@@ -13,18 +13,39 @@ from agentibus.Product import Game
 
 
 def get_price_of(game: Game, driver: webdriver.Chrome):
+    _go_to_g2a(driver)
+    _click_cookie_banner(driver)
+    search_query = game.name.lower() + f' {game.sale_platform} key global'.lower()
+    try:
+        _search_game(driver, search_query)
+    except ElementNotVisibleException:
+        _go_to_g2a(driver)
+        _click_cookie_banner(driver)
+        _search_game(driver, search_query)
+    return _find_right_game(game, driver, search_query)
+
+
+def _go_to_g2a(driver):
     driver.get('https://www.g2a.com/')
     time.sleep(2)
+
+
+def _search_game(driver: webdriver.Chrome, search_query):
+    search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
+    search_bar = search_bar_parent.find_element_by_tag_name('input')
+    _actions_send_keys(driver, search_bar, search_query)
+    search_bar.send_keys(Keys.RETURN)
+    time.sleep(2)
+
+
+def _click_cookie_banner(driver: webdriver.Chrome):
     with suppress(NoSuchElementException):
         modal_options_buttons = driver.find_element_by_class_name('modal-options__buttons')
         cookie_confirm_button = modal_options_buttons.find_element_by_class_name('btn-primary')
         cookie_confirm_button.click()
-    search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
-    search_bar = search_bar_parent.find_element_by_tag_name('input')
-    search_query = game.name.lower() + f' {game.sale_platform} key global'.lower()
-    _actions_send_keys(driver, search_bar, search_query)
-    search_bar.send_keys(Keys.RETURN)
-    time.sleep(2)
+
+
+def _find_right_game(game: Game, driver: webdriver.Chrome, search_query):
     product_grids = driver.find_elements_by_class_name('products-grid__item')
     for product_grid in product_grids:
         if _find_proper_card(product_grid, game.name, search_query):
