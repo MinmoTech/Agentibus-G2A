@@ -4,7 +4,8 @@ from contextlib import suppress
 from decimal import Decimal
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
+    StaleElementReferenceException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
@@ -67,17 +68,20 @@ def _find_right_game(game: Game, driver: webdriver.Chrome, search_query):
 
 def _find_proper_card(product_grid, game_name: str, search_query: str):
     logger = logging.getLogger()
-    card_wrappers = product_grid.find_elements_by_class_name('card-wrapper')
-    for card_wrapper in card_wrappers:
-        card_title_element = card_wrapper.find_element_by_class_name('Card__title')
-        card_title = Utility.filter_special_characters(card_title_element.find_element_by_tag_name('a').text).lower()
-        words_of_game_name = Utility.filter_special_characters(game_name.lower()).split()
-        logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
-        if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
-            card_wrapper.click()
-            return True
-        else:
-            logger.info("Could not find game on G2A")
+    try:
+        card_wrappers = product_grid.find_elements_by_class_name('card-wrapper')
+        for card_wrapper in card_wrappers:
+            card_title_element = card_wrapper.find_element_by_class_name('Card__title')
+            card_title = Utility.filter_special_characters(card_title_element.find_element_by_tag_name('a').text).lower()
+            words_of_game_name = Utility.filter_special_characters(game_name.lower()).split()
+            logger.info(f"Comparing original game title ({search_query}) to g2a game title ({card_title})")
+            if all(x in card_title for x in words_of_game_name) and len(search_query) >= len(card_title):
+                card_wrapper.click()
+                return True
+            else:
+                logger.info("Could not find game on G2A")
+    except StaleElementReferenceException:
+        pass
     return False
 
 
