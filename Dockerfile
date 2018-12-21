@@ -1,6 +1,5 @@
 FROM python:3.7-alpine
 COPY . GameDeals
-RUN apt-get update && apt-get install unzip
 RUN apk add gcc \
     musl-dev \
     python3-dev \
