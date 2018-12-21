@@ -6,7 +6,7 @@ Preferred (and currently the only supported) installation method is docker.
 
 === Installation steps:
 
-- install docker https://docs.docker.com/toolbox/overview/[Windows]| https://docs.docker.com/install/linux/docker-ce/ubuntu/[Ubuntu]
+- install docker https://docs.docker.com/toolbox/overview/[Windows] | https://docs.docker.com/install/linux/docker-ce/ubuntu/[Ubuntu]
 - create telegram bot by talking to https://t.me/botfather[BotFather] and note your access token
 - get your chat id by talking to @get_id_bot and using the "/my_id" command
 - create configuration.ini like https://github.com/juligreen/GameDeals/blob/master/src/gamedeals/resources/configuration.ini.example[this example file]
