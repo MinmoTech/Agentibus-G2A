@@ -10,7 +10,7 @@ def filter_special_characters(some_string: str):
 def calculate_net_price(original_price: Decimal):
     tentative_price = (original_price - (original_price * Decimal(0.108))) - Decimal(0.40)
     net_price = tentative_price - (tentative_price * Decimal(0.01))
-    if net_price > Decimal(0.0):
+    if net_price > Decimal(0):
         return net_price
     else:
-        return Decimal(0.0)
+        return Decimal(0)
