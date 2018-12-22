@@ -6,7 +6,7 @@ from agentibus import ini_parser
 class TelegramSender:
     def __init__(self):
         self.bot = telegram.Bot(ini_parser.get_telegram_token())
-        self.MAX_MESSAGE_LENGTH = 4084
+        self.MAX_MESSAGE_LENGTH = 4080
 
     def send(self, message: str, error_message=False):
         if error_message:
