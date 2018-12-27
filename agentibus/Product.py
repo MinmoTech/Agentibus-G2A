@@ -33,7 +33,8 @@ class Bundle:
 def set_game_meta_data(game: Game):
     if game.sale_price != Decimal(0) and game.g2a_price != Decimal(0):
         game.after_commission_price = Utility.calculate_net_price(game.g2a_price)
-        game.profit_margin = Decimal(game.g2a_price / game.after_commission_price)
+        if game.after_commission_price != Decimal(0):
+            game.profit_margin = Decimal(game.g2a_price / game.after_commission_price)
 
 
 def set_bundle_meta_data(bundle: Bundle):
