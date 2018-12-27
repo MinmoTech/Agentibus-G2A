@@ -14,15 +14,13 @@ def set_game_data(driver, game: Game):
     game.name = driver.find_element_by_tag_name('h1').text
     logging.getLogger().info(f'Getting {game.name} info.')
     if driver.find_elements_by_class_name("stardeal-extras-container"):
-        game.sale_price = _get_stardeal_price()
+        game.sale_price = _get_stardeal_price(driver)
     else:
         try:
             game.sale_price = _get_regular_sale_price(driver)
         except NoSuchElementException:
             logging.getLogger().error(f'Could not get proper info at {game.url}')
-    game.review_count = SteamHandler.get_game_review_number(game.name, driver)
-    game.g2a_price = G2AHandler.get_price_of(game, driver)
-    Product.set_game_meta_data(game)
+    Product.set_game_meta_data(game, driver)
 
 
 def _get_regular_sale_price(driver: webdriver.Chrome):

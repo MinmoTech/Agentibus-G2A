@@ -1,8 +1,14 @@
+import logging
+import traceback
+
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import List
 
-from agentibus import Utility
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+
+from agentibus import Utility, SteamHandler, G2AHandler
 
 
 @dataclass
@@ -30,7 +36,17 @@ class Bundle:
     profit_margin = Decimal(0)
 
 
-def set_game_meta_data(game: Game):
+def set_game_meta_data(game: Game, driver: webdriver.Chrome):
+    try:
+        game.review_count = SteamHandler.get_game_review_number(game.name, driver)
+    except NoSuchElementException:
+        my_stacktrace = traceback.format_exc()
+        logging.getLogger().warning(f'Could not get steam reviws for {game.name} because of:\n {my_stacktrace}')
+    try:
+        game.g2a_price = G2AHandler.get_price_of(game, driver)
+    except NoSuchElementException:
+        my_stacktrace = traceback.format_exc()
+        logging.getLogger().warning(f'Could not get G2A price for {game.name} because of:\n {my_stacktrace}')
     if game.sale_price != Decimal(0) and game.g2a_price != Decimal(0):
         game.after_commission_price = Utility.calculate_net_price(game.g2a_price)
         if game.after_commission_price != Decimal(0):
