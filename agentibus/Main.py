@@ -39,8 +39,9 @@ def job():
         driver.set_window_size(1800, 1070)
         driver.implicitly_wait(2)
         fanatical_games: List[Game] = FanaticalHandler.crawl(driver)
-        for game in fanatical_games:
+        for counter, game in enumerate(fanatical_games):
             FanaticalHandler.set_game_data(driver, game)
+            logging.getLogger().info(f'Setting info for {counter}. game out of {len(fanatical_games)}.')
         humble_games: List[Game] = HumbleStoreHandler.crawl(driver)
         for game in humble_games:
             HumbleStoreHandler.set_game_data(game, driver)
