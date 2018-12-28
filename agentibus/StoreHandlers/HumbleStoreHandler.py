@@ -54,7 +54,7 @@ def crawl(driver: webdriver.Chrome) -> List[Game]:
             game_list.append(_get_filled_game(game_boxes))
         except NoSuchElementException:
             logging.getLogger().info(f'Found {len(game_list)} games on {counter} pages on HumbleBundle')
-    return game_list
+            return game_list
 
 
 def _get_filled_game(game_boxes: collections.Iterable):
