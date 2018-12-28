@@ -41,7 +41,7 @@ def job():
         fanatical_games: List[Game] = FanaticalHandler.crawl(driver)
         for counter, game in enumerate(fanatical_games):
             FanaticalHandler.set_game_data(driver, game)
-            logging.getLogger().info(f'Setting info for {counter}. game out of {len(fanatical_games)}.')
+            logging.getLogger().info(f'Setting info for {counter}. game out of {len(fanatical_games)} on Fanatical.')
         humble_games: List[Game] = HumbleStoreHandler.crawl(driver)
         for game in humble_games:
             HumbleStoreHandler.set_game_data(game, driver)
