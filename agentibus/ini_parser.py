@@ -1,5 +1,6 @@
 import configparser
 import os
+from decimal import Decimal
 
 
 def get_telegram_token():
@@ -17,4 +18,4 @@ def get_telegram_chat_id():
 def get_net_profit_percentage():
     parser = configparser.ConfigParser()
     parser.read(f"{os.environ['AGENTIBUS_RESOURCES']}/configuration.ini")
-    return parser['default']['net_profit_percentage']
+    return Decimal(parser['default']['net_profit_percentage'])
