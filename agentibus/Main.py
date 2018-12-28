@@ -51,7 +51,7 @@ def job():
                 telegram.send(
                     f"Game deal found:\n name: {game.name}\n price: {game.sale_price}\n prifit margin: {game.profit_margin * 100}%\n url: {game.url}")
             else:
-                logging.getLogger().info(f'Profit margin for {game.name} too low, is {game.profit_margin*100}%')
+                logging.getLogger().info(f'Profit margin for {game.name} too low, is {game.profit_margin * 100}%')
         humble_bundles = HumbleBundleHandler.crawl(driver)
         for bundle in humble_bundles:
             HumbleBundleHandler.set_bundle_data(driver, bundle)
@@ -72,7 +72,7 @@ def get_chromedriver_options():
 
 
 def execute():
-    schedule.every(6).hours.do(job)
+    schedule.every(20).hours.do(job)
     try:
         job()
     except Exception:
