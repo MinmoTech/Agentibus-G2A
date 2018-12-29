@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.select import Select
 
-from agentibus import G2AHandler, SteamHandler, Product, Main
+from agentibus import Product
 from agentibus.Product import Game
 
 
