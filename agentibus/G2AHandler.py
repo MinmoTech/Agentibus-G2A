@@ -1,11 +1,12 @@
 import logging
 import time
+import traceback
 from contextlib import suppress
 from decimal import Decimal
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException, \
-    StaleElementReferenceException
+    StaleElementReferenceException, WebDriverException
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
@@ -32,10 +33,15 @@ def _go_to_g2a(driver):
 
 
 def _search_game(driver: webdriver.Chrome, search_query):
-    search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
-    search_bar = search_bar_parent.find_element_by_tag_name('input')
-    _actions_send_keys(driver, search_bar, search_query)
-    search_bar.send_keys(Keys.RETURN)
+    try:
+        search_bar_parent = driver.find_element_by_class_name('topbar-search-form')
+        search_bar = search_bar_parent.find_element_by_tag_name('input')
+        _actions_send_keys(driver, search_bar, search_query)
+        search_bar.send_keys(Keys.RETURN)
+    except WebDriverException:
+        my_stacktrace = traceback.format_exc()
+        logging.getLogger().warning(f'Could not search {search_query} because of:\n{my_stacktrace}')
+
     time.sleep(2)
 
 
