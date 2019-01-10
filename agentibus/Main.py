@@ -49,7 +49,7 @@ def job():
         for game in game_list:
             if game.profit_margin > ini_parser.get_net_profit_percentage():
                 telegram.send(
-                    f"Game deal found:\n name: {game.name}\n price: {game.sale_price}\n prifit margin: {game.profit_margin * 100}%\n url: {game.url}")
+                    f"Game deal found:\n name: {game.name}\n steam reviews: {game.review_count}\n price: {game.sale_price}\n prifit margin: {game.profit_margin * 100}%\n url: {game.url}")
             else:
                 logging.getLogger().info(f'Profit margin for {game.name} too low, is {game.profit_margin * 100}%')
         humble_bundles = HumbleBundleHandler.crawl(driver)
