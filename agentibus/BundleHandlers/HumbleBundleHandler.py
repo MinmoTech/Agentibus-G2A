@@ -1,9 +1,11 @@
+import logging
 import re
 from contextlib import contextmanager
 from decimal import Decimal
 from typing import List
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 from agentibus import Utility, G2AHandler, SteamHandler, Product, Main
 from agentibus.Product import Bundle, Game
@@ -20,27 +22,30 @@ def managed_chromedriver(options):
 
 def set_bundle_data(driver: webdriver.Chrome, bundle: Bundle) -> List[str]:
     driver.get(bundle.url)
-    bundle.name = driver.find_element_by_class_name('hero-title').text
-    bundle.site = 'HumbleBundle'
-    game_name_containers = driver.find_elements_by_class_name('dd-image-box-text')
-    opts = Main.get_chromedriver_options()
-    with managed_chromedriver(opts) as nested_driver:
-        nested_driver.set_window_size(1800, 1070)
-        nested_driver.implicitly_wait(2)
-        for container in game_name_containers:
-            game = Game()
-            game.site = 'HumbleBundle'
-            game.name = container.text
-            game.review_count = SteamHandler.get_game_review_number(game.name, nested_driver)
-            game.g2a_price = G2AHandler.get_price_of(game, nested_driver)
-            bundle.games.append(game)
-            print(f'G2A price of {game.name}: {str(game.g2a_price)}')
-    bundle.sale_price = _get_total_sale_price(driver)
-    for game in bundle.games:
-        bundle.g2a_price = bundle.g2a_price + game.g2a_price
-        bundle.after_commission_price = bundle.after_commission_price + Utility.calculate_net_price(
-            game.g2a_price)
-    Product.set_bundle_meta_data(bundle)
+    try:
+        bundle.name = driver.find_element_by_class_name('hero-title').text
+        bundle.site = 'HumbleBundle'
+        game_name_containers = driver.find_elements_by_class_name('dd-image-box-text')
+        opts = Main.get_chromedriver_options()
+        with managed_chromedriver(opts) as nested_driver:
+            nested_driver.set_window_size(1800, 1070)
+            nested_driver.implicitly_wait(2)
+            for container in game_name_containers:
+                game = Game()
+                game.site = 'HumbleBundle'
+                game.name = container.text
+                game.review_count = SteamHandler.get_game_review_number(game.name, nested_driver)
+                game.g2a_price = G2AHandler.get_price_of(game, nested_driver)
+                bundle.games.append(game)
+                print(f'G2A price of {game.name}: {str(game.g2a_price)}')
+        bundle.sale_price = _get_total_sale_price(driver)
+        for game in bundle.games:
+            bundle.g2a_price = bundle.g2a_price + game.g2a_price
+            bundle.after_commission_price = bundle.after_commission_price + Utility.calculate_net_price(
+                game.g2a_price)
+        Product.set_bundle_meta_data(bundle)
+    except NoSuchElementException:
+        logging.getLogger().info(f"Can't find games in bundle with url {bundle.url}, it might be a Humble Monthly")
 
 
 def _get_total_sale_price(driver: webdriver.Chrome) -> Decimal:
