@@ -65,7 +65,6 @@ def job():
 def get_chromedriver_options():
     options = webdriver.ChromeOptions()
     options.add_argument('--disable-notifications')
-    options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-setuid-sandbox')
     return options
