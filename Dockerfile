@@ -1,17 +1,17 @@
-FROM python:3.7-alpine
+FROM python:3.7-stretch
 COPY . GameDeals
-RUN apk add gcc \
-    musl-dev \
+RUN rm -rf /var/lib/apt/lists/* && \
+    apt-get clean && \
+    apt-get update && \
+    apt-get install -y \
+    gconf-service \
     chromium \
-    chromium-chromedriver \
-    python3-dev \
-    libffi-dev \
-    openssl-dev && \
+    chromedriver \
+    lsb-release \
+    xdg-utils \
+    python3-dev --fix-missing && \
     pip install GameDeals/ && \
     rm -rf GameDeals/ && \
-    apk del openssl-dev \
-        musl-dev \
-        libffi-dev && \
     mkdir -p gamedeals/resources/
 ENV AGENTIBUS_RESOURCES gamedeals/resources/
 ENV PYTHONUNBUFFERED 0
