@@ -1,15 +1,9 @@
-FROM python:3.7-stretch
+FROM selenium/standalone-chrome-debug
 COPY . GameDeals
-RUN rm -rf /var/lib/apt/lists/* && \
-    apt-get clean && \
-    apt-get update && \
-    apt-get install -y \
-    gconf-service \
-    chromium \
-    chromedriver \
-    lsb-release \
-    xdg-utils \
-    python3-dev --fix-missing && \
+RUN sudo apt-get update && \
+    sudo apt-get install -y \
+    python3-dev \
+    python3-pip --fix-missing && \
     pip install GameDeals/ && \
     rm -rf GameDeals/ && \
     mkdir -p gamedeals/resources/
