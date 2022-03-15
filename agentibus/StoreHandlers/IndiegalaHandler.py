@@ -25,11 +25,10 @@ class IndiegalaHandler:
     def get_sale_price(self):
         driver = self.driver
         driver.get(self.indiegala_url)
-        if 'crackerjack' not in driver.page_source:
-            sale_price = driver.find_element_by_class_name('current-price').text
-            return Decimal(sale_price.replace('€', ''))
-        else:
+        if 'crackerjack' in driver.page_source:
             return self._get_sale_price_crackerjack(driver)
+        sale_price = driver.find_element_by_class_name('current-price').text
+        return Decimal(sale_price.replace('€', ''))
 
     @staticmethod
     def _get_sale_price_crackerjack(driver: webdriver.Chrome):

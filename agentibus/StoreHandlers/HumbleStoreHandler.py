@@ -25,10 +25,7 @@ def set_game_data(game: Game, driver: webdriver.Chrome):
 def _get_platform(driver: webdriver.Chrome):
     platform_parent = driver.find_element_by_class_name('availability-section')
     platform = platform_parent.find_element_by_class_name('platform').get_attribute('class')
-    if 'steam' in platform:
-        return 'Steam'
-    else:
-        return platform.replace('platform ', '')
+    return 'Steam' if 'steam' in platform else platform.replace('platform ', '')
 
 
 def _do_age_check(driver: webdriver.Chrome):
@@ -40,9 +37,8 @@ def _do_age_check(driver: webdriver.Chrome):
 
 def crawl(driver: webdriver.Chrome) -> List[Game]:
     driver.get('https://www.humblebundle.com/store/search?sort=bestselling&filter=onsale')
-    game_list = []
     game_boxes = driver.find_elements_by_class_name('entity-link')
-    game_list.append(_get_filled_game(game_boxes))
+    game_list = [_get_filled_game(game_boxes)]
     counter = 0
     while True:
         counter += 1
